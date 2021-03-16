@@ -7,17 +7,27 @@
   font-family: "Shippori Mincho B1", serif;
 }
 
-em {
+html {
+  background-color: #e5e5f7;
+  background-image: radial-gradient(
+    rgba(#3273dc, .4) 0.7000000000000001px,
+    rgba(#e5e5f7, .4) 0.7000000000000001px
+  );
+  background-size: 14px 14px;
+}
+
+.example-kanji {
   color: darkslategrey;
 }
 
-body {
+.example-meaning {
+  color: grey;
+}
 
-  background-color: #e5e5f7;
-  // opacity: 0.4;
-  background-image: radial-gradient(
-    #444cf7 0.7000000000000001px,
-    #e5e5f7 0.7000000000000001px
-  );
-  background-size: 14px 14px;
+.example-reading {
+  color: darkgrey;
+}
+
+.examples {
+  vertical-align: center !important;
 }

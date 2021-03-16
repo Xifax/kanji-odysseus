@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container main">
     <!-- TODO: customize kanji rank (e.g., only id > 1000) -->
     <!-- TODO: button ROLL new kanji -->
     <section class="hero is-small is-link block">
@@ -11,11 +11,11 @@
     <!-- Readings and links -->
     <div class="columns is-centered">
       <div class="column">
-        <div class="tags are-small is-left">
+        <div class="tags are-small is-right">
           <span
             v-for="m in kanji.meanings"
             :key="m"
-            class="tag is-light is-warning"
+            class="tag is-light is-warning is-lowercase"
             >{{ m }}</span
           >
         </div>
@@ -32,15 +32,15 @@
       </div>
       <div class="column">
         <!-- Links to other resources -->
-        <div class="tags are-small is-right">
+        <div class="tags are-small is-left">
           <span class="tag is-light is-link">
             <a target="_blank" :href="'https://yourei.jp/' + kanji.kanji"
-              >Examples</a
+              >examples</a
             >
           </span>
           <span class="tag is-light is-link">
             <a target="_blank" :href="'https://kotobank.jp/word/' + kanji.kanji"
-              >Thesaurus</a
+              >thesaurus</a
             >
           </span>
         </div>
@@ -62,7 +62,7 @@
     </div>
 
     <!-- Similar kanji -->
-    <div class="columns is-centered box block">
+    <div class="columns is-centered box">
       <div class="buttons is-centered">
         <button
           v-for="k in kanji.group"
@@ -82,12 +82,12 @@
     <!-- Examples -->
     <!-- TODO: make KANJI ONLY clickable -->
     <div class="columns is-centered block">
-      <table class="table">
+      <table class="table examples has-text-left">
         <tr v-for="w in kanji.words" :key="w">
           <!-- Highlight kanji in word -->
-          <td v-html="highlight(w.kanji)"></td>
-          <td>{{ w.reading }}</td>
-          <td>{{ w.meaning }}</td>
+          <td class="example-kanji is-size-4" v-html="highlight(w.kanji)"></td>
+          <td class="example-reading">{{ w.reading }}</td>
+          <td class="example-meaning is-size-7">{{ w.meaning }}</td>
         </tr>
       </table>
     </div>
