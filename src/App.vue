@@ -19,5 +19,6 @@ export default {
 
 <style lang="sass">
 @import "./bulma/bulma.sass"
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400&display=swap')
 @import "theme.scss"
 </style>

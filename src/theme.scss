@@ -1,28 +1,23 @@
 .kanji-title {
- font-size: 7em;
+  font-size: 8em;
+  font-weight: 400;
+}
+
+.pretty-font {
+  font-family: "Shippori Mincho B1", serif;
 }
 
 em {
-    color: darkslategrey;
+  color: darkslategrey;
 }
 
 body {
-    // background-color: #E5E5F7;
-    // // opacity: 0.4;
-    // background: radial-gradient(circle, transparent 20%, #E5E5F7 20%, #E5E5F7 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, #E5E5F7 20%, #E5E5F7 80%, transparent 80%, transparent) 50px 50px, linear-gradient(#444CF7 4px, transparent 4px) 0 -2px, linear-gradient(90deg, #444CF7 4px, #E5E5F7 4px) -2px 0;
-    // background-size: 100px 100px, 100px 100px, 50px 50px, 50px 50px;
 
-    // background-color: #E5E5F7;
-    // // opacity: 0.4;
-    // background: repeating-linear-gradient( 45deg, #444CF7, #444CF7 10px, #E5E5F7 10px, #E5E5F7 50px );
-
-//     background-color: #E5E5F7;
-// // opacity: 0.4;
-// background-size: 40px 40px;
-// background-image:  repeating-linear-gradient(to right, #444CF7, #444CF7 2px, #E5E5F7 2px, #E5E5F7);
-
-background-color: #E5E5F7;
-// opacity: 0.4;
-background-image: radial-gradient(#444CF7 0.7000000000000001px, #E5E5F7 0.7000000000000001px);
-background-size: 14px 14px;
+  background-color: #e5e5f7;
+  // opacity: 0.4;
+  background-image: radial-gradient(
+    #444cf7 0.7000000000000001px,
+    #e5e5f7 0.7000000000000001px
+  );
+  background-size: 14px 14px;
 }

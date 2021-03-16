@@ -4,7 +4,7 @@
     <!-- TODO: button ROLL new kanji -->
     <section class="hero is-small is-link block">
       <div class="hero-body">
-        <h1 class="title kanji-title">{{ kanji.kanji }}</h1>
+        <h1 class="title kanji-title pretty-font">{{ kanji.kanji }}</h1>
       </div>
     </section>
 
@@ -62,28 +62,26 @@
     </div>
 
     <!-- Similar kanji -->
-    <div class="columns is-centered box">
-      <div class="field is-grouped">
-        <p
-          class="control"
+    <div class="columns is-centered box block">
+      <div class="buttons is-centered">
+        <button
           v-for="k in kanji.group"
           :key="k"
           href="#"
           @click="setKanji(k)"
+          class="button is-large is-outlined is-link pretty-font"
+          :class="{ 'is-focused': k === kanji.kanji }"
         >
-          <button
-            class="button is-medium is-outlined is-link"
-            :class="{ 'is-focused': k === kanji.kanji }"
-          >
-            {{ k }}
-          </button>
-        </p>
+          {{ k }}
+        </button>
       </div>
     </div>
 
+    <br />
+
     <!-- Examples -->
     <!-- TODO: make KANJI ONLY clickable -->
-    <div class="columns is-centered box">
+    <div class="columns is-centered block">
       <table class="table">
         <tr v-for="w in kanji.words" :key="w">
           <!-- Highlight kanji in word -->
