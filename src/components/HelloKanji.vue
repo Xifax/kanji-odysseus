@@ -10,16 +10,29 @@
 
     <!-- Readings and links -->
     <div class="columns is-centered">
-      <div class="column"></div>
+      <div class="column">
+        <div class="tags are-small is-left">
+          <span
+            v-for="m in kanji.meanings"
+            :key="m"
+            class="tag is-light is-warning"
+            >{{ m }}</span
+          >
+        </div>
+      </div>
       <div class="column">
         <div class="tags are-large is-centered">
-          <span class="tag is-light is-info">{{ kanji.on }}</span>
-          <span class="tag is-light is-primary">{{ kanji.kun }}</span>
+          <span v-if="kanji.on" class="tag is-light is-info">{{
+            kanji.on
+          }}</span>
+          <span v-if="kanji.kun" class="tag is-light is-primary">{{
+            kanji.kun
+          }}</span>
         </div>
       </div>
       <div class="column">
         <!-- Links to other resources -->
-        <div class="tags are-medium is-right">
+        <div class="tags are-small is-right">
           <span class="tag is-light is-link">
             <a target="_blank" :href="'https://yourei.jp/' + kanji.kanji"
               >Examples</a
@@ -65,7 +78,6 @@
           <td>{{ w.meaning }}</td>
         </tr>
       </table>
-
     </div>
   </div>
 </template>
