@@ -47,6 +47,20 @@
       </div>
     </div>
 
+    <!-- Additional data -->
+    <div v-if="kanji.jp_meanings" class="columns is-centered block">
+      <div class="column">
+        <div class="tags are-medium is-centered">
+          <span
+            v-for="m in kanji.jp_meanings"
+            :key="m"
+            class="tag is-light is-error"
+            >{{ m }}</span
+          >
+        </div>
+      </div>
+    </div>
+
     <!-- Similar kanji -->
     <div class="columns is-centered box">
       <div class="field is-grouped">
