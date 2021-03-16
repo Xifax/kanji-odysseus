@@ -2,51 +2,70 @@
   <div class="container">
     <!-- TODO: customize kanji rank (e.g., only id > 1000) -->
     <!-- TODO: button ROLL new kanji -->
-    <section class="hero is-small is-link box">
+    <section class="hero is-small is-link block">
       <div class="hero-body">
         <h1 class="title kanji-title">{{ kanji.kanji }}</h1>
       </div>
     </section>
-    <!-- TODO: apply cool styles for everything -->
-    <div class="columns is-centered box">
-        <div class="field is-grouped">
-          <p
-            class="control"
-            v-for="k in kanji.group"
-            :key="k"
-            href="#"
-            @click="setKanji(k)"
-          >
-            <button class="button is-medium is-outlined is-link">
-              {{ k }}
-            </button>
-          </p>
-        </div>
-    </div>
 
-    <!-- TODO: get meaning from odyssey? -->
-    <!-- TODO: check some readings: TAMA, ATAI, ― -->
-    <div class="container block">
-      <span class="tag is-light is-info is-large">{{ kanji.on }}</span>
-      <span class="tag is-light is-primary is-large">{{ kanji.kun }}</span>
-    </div>
-
-    <!-- Highlight kanji in word -->
-    <!-- TODO: make KANJI ONLY clickable -->
+    <!-- Readings and links -->
     <div class="columns is-centered">
+      <div class="column"></div>
+      <div class="column">
+        <div class="tags are-large is-centered">
+          <span class="tag is-light is-info">{{ kanji.on }}</span>
+          <span class="tag is-light is-primary">{{ kanji.kun }}</span>
+        </div>
+      </div>
+      <div class="column">
+        <!-- Links to other resources -->
+        <div class="tags are-medium is-right">
+          <span class="tag is-light is-link">
+            <a target="_blank" :href="'https://yourei.jp/' + kanji.kanji"
+              >Examples</a
+            >
+          </span>
+          <span class="tag is-light is-link">
+            <a target="_blank" :href="'https://kotobank.jp/word/' + kanji.kanji"
+              >Thesaurus</a
+            >
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Similar kanji -->
+    <div class="columns is-centered box">
+      <div class="field is-grouped">
+        <p
+          class="control"
+          v-for="k in kanji.group"
+          :key="k"
+          href="#"
+          @click="setKanji(k)"
+        >
+          <button
+            class="button is-medium is-outlined is-link"
+            :class="{ 'is-focused': k === kanji.kanji }"
+          >
+            {{ k }}
+          </button>
+        </p>
+      </div>
+    </div>
+
+    <!-- Examples -->
+    <!-- TODO: make KANJI ONLY clickable -->
+    <div class="columns is-centered box">
       <table class="table">
         <tr v-for="w in kanji.words" :key="w">
+          <!-- Highlight kanji in word -->
           <td v-html="highlight(w.kanji)"></td>
           <td>{{ w.reading }}</td>
           <td>{{ w.meaning }}</td>
         </tr>
       </table>
 
-      <!-- <div v-for="w in kanji.words" :key="w">
-        <span v-html="highlight(w.kanji)"></span>
-        {{ w.reading }}
-        {{ w.meaning }}
-      </div> -->
     </div>
   </div>
 </template>
