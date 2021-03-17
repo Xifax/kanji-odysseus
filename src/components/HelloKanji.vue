@@ -151,26 +151,15 @@ export default {
     /////////////////////////////////
     // Load local assets on demand
     async fetchLocalKanjiData() {
-      // this.kanjiData = await import("./assets/kanji.json")
-      // fetch("./kanji.json")
-      //   .then((res) => res.json())
-      //   .then((data) => {
-      //     this.kanjiData = data;
-      //   })
-      //   .catch((err) => console.error(err));
       const data = await fetch("./kanji.json");
       this.kanjiData = await data.json();
     },
     // Fetch kanji from remote json storage
-    fetchKanji(kanji_id) {
-      fetch(
+    async fetchKanji(kanji_id) {
+      const result = await fetch(
         `https://paraio.com/v1/kanji/${kanji_id}?accessKey=app:kanji-odysseus`,
       )
-        .then((res) => res.json())
-        .then((data) => {
-          this.kanji = data;
-        })
-        .catch((err) => console.error(err));
+      this.kanji = await result.json()
     },
     // Fetch random kanji
     fetchRandomKanji() {
