@@ -10,8 +10,8 @@
 html {
   background-color: #e5e5f7;
   background-image: radial-gradient(
-    rgba(#3273dc, .4) 0.7000000000000001px,
-    rgba(#e5e5f7, .4) 0.7000000000000001px
+    rgba(#3273dc, 0.4) 0.7000000000000001px,
+    rgba(#e5e5f7, 0.4) 0.7000000000000001px
   );
   background-size: 14px 14px;
 }
@@ -28,6 +28,6 @@ html {
   color: darkgrey;
 }
 
-.examples {
-  vertical-align: center !important;
-}
+// .examples {
+//   vertical-align: center !important;
+// }
