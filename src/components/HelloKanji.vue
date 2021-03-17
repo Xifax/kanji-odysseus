@@ -100,8 +100,16 @@ export default {
   name: "HelloKanji",
   props: {},
   async mounted() {
-    this.fetchRandomKanji();
-    this.fetchLocalKanjiData();
+    let kanjiData = localStorage.getItem("kanjiData");
+    // Either get kanji data from local storage
+    if (kanjiData !== null) {
+      this.kanjiData = JSON.parse(kanjiData);
+      this.setRandomKanji();
+      // Or fetch kanji from API and initialize local storage
+    } else {
+      this.fetchRandomKanji();
+      this.fetchLocalKanjiData();
+    }
   },
   data() {
     return {
@@ -153,13 +161,14 @@ export default {
     async fetchLocalKanjiData() {
       const data = await fetch("./kanji.json");
       this.kanjiData = await data.json();
+      localStorage.setItem("kanjiData", JSON.stringify(this.kanjiData));
     },
     // Fetch kanji from remote json storage
     async fetchKanji(kanji_id) {
       const result = await fetch(
-        `https://paraio.com/v1/kanji/${kanji_id}?accessKey=app:kanji-odysseus`,
-      )
-      this.kanji = await result.json()
+        `https://paraio.com/v1/kanji/${kanji_id}?accessKey=app:kanji-odysseus`
+      );
+      this.kanji = await result.json();
     },
     // Fetch random kanji
     fetchRandomKanji() {
