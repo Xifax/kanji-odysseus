@@ -48,11 +48,12 @@
     </div>
 
     <!-- Additional data -->
+    <!-- TODO: split meaning by japanese dot if the length is too wide -->
     <div v-if="kanji.jp_meanings" class="columns is-centered block">
       <div class="column">
         <div class="tags are-medium is-centered">
           <span
-            v-for="m in kanji.jp_meanings"
+            v-for="m in splitLongLines(kanji.jp_meanings)"
             :key="m"
             class="tag is-light is-error is-small"
             >{{ m }}</span
@@ -80,8 +81,8 @@
     <br />
 
     <!-- Examples -->
-    <!-- TODO: make KANJI ONLY clickable -->
-    <div class="columns is-centered block">
+    <!-- TODO: make ONLY KANJI clickable -->
+    <div class="columns is-centered is-full-width block">
       <table class="table examples has-text-left">
         <tr v-for="w in kanji.words" :key="w">
           <!-- Highlight kanji in word -->
@@ -126,6 +127,10 @@ export default {
     };
   },
   methods: {
+    ///////////////
+    /* UI update */
+    ///////////////
+
     // Set kanji by key
     setKanji(kanji) {
       this.kanji = this.kanjiData[kanji];
@@ -139,6 +144,27 @@ export default {
     setRandomKanji() {
       this.kanji = this.kanjiData[this.getRandomKanji()];
     },
+
+    ////////////////////
+    /* Visual filters */
+    ////////////////////
+
+    // Split long sentences into multiple items (for non-breakable tags)
+    splitLongLines(examples) {
+      console.log(examples)
+      let results = []
+      examples.forEach(element => {
+        // Lstrip numbers
+        element = element.replace(/^[0-9]+/, '')
+        if(element.length > 18) {
+          results.concat(element.split("。"))
+        } else {
+          results.push(element)
+        }
+      });
+      return results
+    },
+
     // Replace current kanji with some custom formatting
     highlight(word) {
       return word.replace(
@@ -154,9 +180,11 @@ export default {
     isKanji(char) {
       return /[\u4e00-\u9faf\u3400-\u4dbf]/.test(char);
     },
+
     /////////////////////////////////
     /* Async (potentially) methods */
     /////////////////////////////////
+
     // Load local assets on demand
     async fetchLocalKanjiData() {
       const data = await fetch("./kanji.json");
@@ -176,7 +204,7 @@ export default {
     },
   },
   computed: {
-    // Separate property for current kanji
+    // Separate property for random kanji from storage
     randomKanji() {
       return kanjiData[this.getRandomKanji()];
     },
