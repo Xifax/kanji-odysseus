@@ -1,5 +1,4 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png" /> -->
   <HelloKanji />
 </template>
 
@@ -18,6 +17,7 @@ export default {
 </script>
 
 <style lang="sass">
+@import "bulma.custom.scss"
 @import "./bulma/bulma.sass"
 @import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400&display=swap')
 @import "theme.scss"

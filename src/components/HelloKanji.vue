@@ -1,8 +1,10 @@
 <template>
   <div class="container main">
-    <!-- TODO: customize kanji rank (e.g., only id > 1000) -->
     <!-- TODO: button ROLL new kanji -->
-    <section class="hero is-small is-link block">
+    <section
+      class="hero is-small is-link block clickable"
+      @click="setRandomKanji()"
+    >
       <div class="hero-body">
         <h1 class="title kanji-title pretty-font">{{ kanji.kanji }}</h1>
       </div>
@@ -83,15 +85,113 @@
     <!-- Examples -->
     <!-- TODO: make ONLY KANJI clickable -->
     <div class="columns is-centered is-full-width block">
-      <table class="table examples has-text-left">
-        <tr v-for="w in kanji.words" :key="w">
-          <!-- Highlight kanji in word -->
-          <td class="example-kanji is-size-4" v-html="highlight(w.kanji)"></td>
-          <td class="example-reading">{{ w.reading }}</td>
-          <td class="example-meaning is-size-7">{{ w.meaning }}</td>
-        </tr>
-      </table>
+      <div class="column is-half">
+        <table class="table has-text-left is-fullwidth">
+          <tr v-for="w in kanji.words" :key="w">
+            <!-- Highlight kanji in word -->
+            <td
+              class="example-kanji is-size-4"
+              v-html="highlight(w.kanji)"
+            ></td>
+            <td class="example-reading">{{ w.reading }}</td>
+            <td class="example-meaning is-size-7">{{ w.meaning }}</td>
+          </tr>
+        </table>
+      </div>
     </div>
+  </div>
+
+  <br />
+
+  <!-- Footer with settings and links -->
+  <footer class="footer">
+    <div class="content">
+      <div class="columns">
+        <div class="column is-one-quarter">
+          <p class="has-text-left has-text-grey-light pretty-font">
+            Kanji Odysseus
+          </p>
+        </div>
+        <div class="column">
+          <div class="buttons is-right">
+            <button
+              class="button is-small is-outlined is-danger"
+              @click="showModal = true"
+            >
+              <span class="icon is-small">
+                <i class="fas fa-tools"></i>
+              </span>
+            </button>
+            <!-- TODO: link to github -->
+            <a href="https://github.com/Xifax" class="button is-small">
+              <span class="icon is-small">
+                <i class="fab fa-github"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal settings -->
+  <div class="modal" :class="{ 'is-active': showModal }">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="container box">
+        <section class="hero is-small block">
+          <div class="hero-body">
+            <p class="title pretty-font">Tweaks</p>
+          </div>
+        </section>
+        <div class="field has-addons">
+          <p class="control">
+            <a class="button is-static">漢字 min frequency</a>
+          </p>
+          <div class="control">
+            <input
+              v-model="minFreq"
+              class="input"
+              type="number"
+              min="0"
+              placeholder="0"
+            />
+          </div>
+        </div>
+        <div class="field has-addons">
+          <p class="control">
+            <a class="button is-static">漢字 max frequency</a>
+          </p>
+          <div class="control">
+            <input
+              v-model="maxFreq"
+              class="input"
+              type="number"
+              min="0"
+              placeholder="0"
+            />
+          </div>
+        </div>
+        <div class="field has-text-left">
+          <label class="checkbox">
+            <input v-model="saveKanji" type="checkbox" />
+            If possible, don't repeat the same kanji twice
+            <em class="has-text-grey-light">(will save already shown)</em>
+          </label>
+        </div>
+
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-link" @click="saveSettings()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      class="modal-close is-large"
+      @click="saveSettings()"
+      aria-label="close"
+    ></button>
   </div>
 </template>
 
@@ -111,6 +211,17 @@ export default {
       this.fetchRandomKanji();
       this.fetchLocalKanjiData();
     }
+
+    // Load settings
+    this.minFreq = localStorage.getItem("minFreq") || 0;
+    this.maxFreq = localStorage.getItem("maxFreq") || 9999;
+    this.saveKanji = localStorage.getItem("saveKanji") || false;
+    let savedKanji = localStorage.getItem("savedKanji");
+    if (savedKanji != null) {
+      this.savedKanji = JSON.parse(savedKanji);
+    } else {
+      localStorage.setItem("savedKanji", JSON.stringify([]));
+    }
   },
   data() {
     return {
@@ -124,6 +235,11 @@ export default {
         group: ["龠", "龡", "龢", "龣", "龤", "龥"],
         meanings: ["flute"],
       },
+      showModal: false,
+      savedKanji: [],
+      minFreq: 0,
+      maxFreq: 9999,
+      saveKanji: false,
     };
   },
   methods: {
@@ -142,7 +258,24 @@ export default {
     },
     // Update current kanji
     setRandomKanji() {
+      console.log(this.kanji.frequency);
       this.kanji = this.kanjiData[this.getRandomKanji()];
+    },
+    // Update local storage settings
+    saveSettings() {
+      localStorage.setItem("minFreq", this.minFreq);
+      localStorage.setItem("maxFreq", this.maxFreq);
+      localStorage.setItem("saveKanji", this.saveKanji);
+      this.showModal = false;
+    },
+    // Update shown kanji storage
+    saveKanji(kanji) {
+      if(this.saveKanji) {
+        if(!this.savedKanji.includes(kanji.kanji)) {
+          this.savedKanji.push(kanji.kanji)
+          localStorage.setItem("savedKanji", JSON.stringify(this.savedKanji))
+        }
+      }
     },
 
     ////////////////////
@@ -151,18 +284,17 @@ export default {
 
     // Split long sentences into multiple items (for non-breakable tags)
     splitLongLines(examples) {
-      console.log(examples)
-      let results = []
-      examples.forEach(element => {
+      let results = [];
+      examples.forEach((element) => {
         // Lstrip numbers
-        element = element.replace(/^[0-9]+/, '')
-        if(element.length > 18) {
-          results.concat(element.split("。"))
+        element = element.replace(/^[0-9]+/, "");
+        if (element.length > 18) {
+          results.concat(element.split("。"));
         } else {
-          results.push(element)
+          results.push(element);
         }
       });
-      return results
+      return results;
     },
 
     // Replace current kanji with some custom formatting
