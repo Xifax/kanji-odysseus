@@ -346,7 +346,7 @@ export default {
     },
     // Fetch random kanji
     fetchRandomKanji() {
-      this.fetchKanji(getRandomKanjiIndex());
+      this.fetchKanji(this.getRandomKanjiIndex());
     },
   },
   computed: {
