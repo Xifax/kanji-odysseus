@@ -145,32 +145,34 @@
           </div>
         </section>
         <div class="field has-addons">
-          <p class="control">
-            <a class="button is-static">漢字 min frequency</a>
-          </p>
           <div class="control">
             <input
               v-model="minFreq"
               class="input"
               type="number"
-              min="0"
-              placeholder="0"
+              min="1"
+              max="2000"
+              placeholder="1"
             />
           </div>
+          <p class="control">
+            <a class="button is-static">漢字 min frequency</a>
+          </p>
         </div>
         <div class="field has-addons">
-          <p class="control">
-            <a class="button is-static">漢字 max frequency</a>
-          </p>
           <div class="control">
             <input
               v-model="maxFreq"
               class="input"
               type="number"
-              min="0"
-              placeholder="0"
+              min="2"
+              max="2001"
+              placeholder="2001"
             />
           </div>
+          <p class="control">
+            <a class="button is-static">漢字 max frequency</a>
+          </p>
         </div>
         <div class="field has-text-left">
           <label class="checkbox">
@@ -213,8 +215,8 @@ export default {
     }
 
     // Load settings
-    this.minFreq = localStorage.getItem("minFreq") || 0;
-    this.maxFreq = localStorage.getItem("maxFreq") || 9999;
+    this.minFreq = localStorage.getItem("minFreq") || 1;
+    this.maxFreq = localStorage.getItem("maxFreq") || 2001;
     this.saveKanji = localStorage.getItem("saveKanji") || false;
     let savedKanji = localStorage.getItem("savedKanji");
     if (savedKanji != null) {
@@ -237,8 +239,8 @@ export default {
       },
       showModal: false,
       savedKanji: [],
-      minFreq: 0,
-      maxFreq: 9999,
+      minFreq: 1,
+      maxFreq: 2001,
       saveKanji: false,
     };
   },
@@ -254,11 +256,11 @@ export default {
     // Get random kanji key
     getRandomKanji() {
       let availableKanji = Object.keys(this.kanjiData);
-      return availableKanji[Math.floor(Math.random() * availableKanji.length)];
+      return availableKanji[this.getRandomKanjiIndex()];
     },
     // Update current kanji
     setRandomKanji() {
-      console.log(this.kanji.frequency);
+      console.log("Kanji freq/index: ", this.kanji.id);
       this.kanji = this.kanjiData[this.getRandomKanji()];
     },
     // Update local storage settings
@@ -269,12 +271,25 @@ export default {
       this.showModal = false;
     },
     // Update shown kanji storage
-    saveKanji(kanji) {
-      if(this.saveKanji) {
-        if(!this.savedKanji.includes(kanji.kanji)) {
-          this.savedKanji.push(kanji.kanji)
-          localStorage.setItem("savedKanji", JSON.stringify(this.savedKanji))
+    saveShownKanji(kanji) {
+      if (this.saveKanji) {
+        if (!this.savedKanji.includes(kanji.kanji)) {
+          this.savedKanji.push(kanji.kanji);
+          localStorage.setItem("savedKanji", JSON.stringify(this.savedKanji));
         }
+      }
+    },
+    // Either use supplied frequencies or use all kanji
+    getRandomKanjiIndex() {
+      if (this.minFreq === 0 && this.maxFreq === 2001) {
+        let availableKanji = Object.keys(this.kanjiData);
+        return Math.floor(Math.random() * availableKanji.length);
+      } else {
+        return Math.floor(
+          Math.random() *
+            (Math.floor(this.maxFreq) - Math.ceil(this.minFreq) + 1) +
+            Math.ceil(this.minFreq)
+        );
       }
     },
 
@@ -332,7 +347,7 @@ export default {
     },
     // Fetch random kanji
     fetchRandomKanji() {
-      this.fetchKanji(Math.floor(Math.random() * 2001));
+      this.fetchKanji(getRandomKanjiIndex());
     },
   },
   computed: {
