@@ -109,7 +109,7 @@
       <div class="columns">
         <div class="column is-one-quarter">
           <p class="has-text-left has-text-grey-light pretty-font">
-            Kanji Odysseus
+            Random Kanji Odysseus
           </p>
         </div>
         <div class="column">
@@ -122,8 +122,7 @@
                 <i class="fas fa-tools"></i>
               </span>
             </button>
-            <!-- TODO: link to github -->
-            <a href="https://github.com/Xifax" class="button is-small">
+            <a href="https://github.com/Xifax/kanji-odysseus" class="button is-small">
               <span class="icon is-small">
                 <i class="fab fa-github"></i>
               </span>
