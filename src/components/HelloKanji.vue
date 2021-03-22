@@ -144,7 +144,7 @@
             <a class="button is-static">漢字 max frequency</a>
           </p>
         </div>
-        <div class="field has-text-left">
+        <div class="field has-text-left is-hidden">
           <label class="checkbox">
             <input v-model="saveKanji" type="checkbox" />
             If possible, don't repeat the same kanji twice
