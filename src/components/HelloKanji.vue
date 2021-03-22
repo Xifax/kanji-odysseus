@@ -2,7 +2,7 @@
   <div class="container main">
     <!-- TODO: button ROLL new kanji -->
     <section
-      class="hero is-small is-link block clickable"
+      class="hero is-small is-link block is-clickable"
       @click="setRandomKanji()"
     >
       <div class="hero-body">
@@ -103,35 +103,6 @@
 
   <br />
 
-  <!-- Footer with settings and links -->
-  <footer class="footer">
-    <div class="content">
-      <div class="columns">
-        <div class="column is-one-quarter">
-          <p class="has-text-left has-text-grey-light pretty-font">
-            Random Kanji Odysseus
-          </p>
-        </div>
-        <div class="column">
-          <div class="buttons is-right">
-            <button
-              class="button is-small is-outlined is-danger"
-              @click="showModal = true"
-            >
-              <span class="icon is-small">
-                <i class="fas fa-tools"></i>
-              </span>
-            </button>
-            <a href="https://github.com/Xifax/kanji-odysseus" class="button is-small">
-              <span class="icon is-small">
-                <i class="fab fa-github"></i>
-              </span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
 
   <!-- Modal settings -->
   <div class="modal" :class="{ 'is-active': showModal }">
@@ -194,6 +165,35 @@
       aria-label="close"
     ></button>
   </div>
+  <!-- Footer with settings and links -->
+  <footer class="footer">
+    <div class="content">
+      <div class="columns is-mobile">
+        <div class="column is-one-quarter">
+          <p class="has-text-left has-text-grey-light pretty-font is-size-7">
+            Kanji Odysseus
+          </p>
+        </div>
+        <div class="column">
+          <div class="buttons is-right">
+            <button
+              class="button is-small is-outlined is-danger"
+              @click="showModal = true"
+            >
+              <span class="icon is-small">
+                <i class="fas fa-tools"></i>
+              </span>
+            </button>
+            <a href="https://github.com/Xifax/kanji-odysseus" class="button is-small">
+              <span class="icon is-small">
+                <i class="fab fa-github"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 </template>
 
 <script>

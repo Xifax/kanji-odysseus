@@ -28,6 +28,14 @@ html {
   color: darkgrey;
 }
 
-.clickable {
-  cursor: pointer;
+// Pin footer to bottom
+
+.main {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
 }
