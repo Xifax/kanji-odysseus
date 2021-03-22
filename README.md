@@ -6,7 +6,7 @@ Simple SPA for showing kanji and related kanji groups + associated info.
 
 Deployed on [Netlify](https://kanji-odysseus.netlify.app/).
 
-Uses local storage (mostly) and fall backs to Paraio json storage for fetching kanji data.
+Uses local storage (mostly) and falls back to Paraio json storage for fetching kanji data.
 ## JSON API
 
 Located [here](https://paraio.com/v1/kanji/${kanji_id}?accessKey=app:kanji-odysseus)
